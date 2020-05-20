@@ -1,5 +1,7 @@
 import * as THREE from '/build/three.module.js'
 import { OrbitControls } from '/jsm/controls/OrbitControls'
+import { Maigard_git_class_commits, GitHubCommit } from './Maigard_git-class_commits.js'
+import { generateList } from './graph.js'
 
 const scene: THREE.Scene = new THREE.Scene()
 
@@ -89,25 +91,53 @@ document.addEventListener('keyup', (event) => {
 	}
 });
 
+const generatedList = generateList(Maigard_git_class_commits);
+
+// Draw List
+const drawCubeRandomly = (scene: THREE.Scene) => {
+	const geometry: THREE.BoxGeometry = new THREE.BoxGeometry()
+	const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
+	const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
+	cube.translateZ(-75);
+	cube.translateY(6);
+
+	const positions = [-6,-3,0,3,6];
+	const randomPosition = Math.floor(Math.random() * 5);
+	cube.translateX(positions[randomPosition]);
+	cube.rotation.x += 0.2;
+	currentCubes.push({cube, lane: randomPosition});
+	scene.add(cube);
+}
+
+let listCounter = 0;
+const drawCubeFromList = (scene: THREE.Scene, list: {commit: GitHubCommit, lane: number}[]) => {
+	const geometry: THREE.BoxGeometry = new THREE.BoxGeometry()
+	const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
+	const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
+	cube.translateZ(-75);
+	cube.translateY(6);
+
+	const positions = [-6,-3,0,3,6];
+	// const randomPosition = Math.floor(Math.random() * 5);
+	const currentCommit = list[listCounter];
+	cube.translateX(positions[currentCommit.lane]);
+	cube.rotation.x += 0.2;
+	currentCubes.push({cube, lane: currentCommit.lane});
+	scene.add(cube);
+	listCounter++;
+}
+
+
 var animate = function () {
 	requestAnimationFrame(animate);
 
 	const currentTime = Date.now()/1000;
 	const oneSecondHasPassed = currentTime > startTime+1;
-	if (oneSecondHasPassed) {
+	const cubesRemainToBeDrawn = listCounter <= generatedList.length-1;
+	if (oneSecondHasPassed && cubesRemainToBeDrawn) {
 		startTime = currentTime;
-		const geometry: THREE.BoxGeometry = new THREE.BoxGeometry()
-		const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
-		const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
-		cube.translateZ(-75);
-		cube.translateY(6);
-
-		const positions = [-6,-3,0,3,6];
-		const randomPosition = Math.floor(Math.random() * 5);
-		cube.translateX(positions[randomPosition]);
-		cube.rotation.x += 0.2;
-		currentCubes.push({cube, lane: randomPosition});
-		scene.add(cube);
+		// drawCubeRandomly(scene);
+		drawCubeFromList(scene, generatedList);
 	}
 
 	currentCubes.forEach((cubeData: {cube: THREE.Mesh, lane: string}) => {
