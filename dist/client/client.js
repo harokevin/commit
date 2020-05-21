@@ -95,16 +95,17 @@ let listCounter = 0;
 const drawCubeFromList = (scene, list) => {
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.translateZ(-75);
-    cube.translateY(6);
     const positions = [-6, -3, 0, 3, 6];
-    // const randomPosition = Math.floor(Math.random() * 5);
-    const currentCommit = list[listCounter];
-    cube.translateX(positions[currentCommit.lane]);
-    cube.rotation.x += 0.2;
-    currentCubes.push({ cube, lane: currentCommit.lane });
-    scene.add(cube);
+    const listOfCommitsToDraw = list[listCounter];
+    listOfCommitsToDraw.forEach(commitLane => {
+        const cube = new THREE.Mesh(geometry, material);
+        cube.translateZ(-75);
+        cube.translateY(6);
+        cube.translateX(positions[commitLane]);
+        cube.rotation.x += 0.2;
+        currentCubes.push({ cube, lane: commitLane });
+        scene.add(cube);
+    });
     listCounter++;
 };
 var animate = function () {

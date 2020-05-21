@@ -110,20 +110,22 @@ const drawCubeRandomly = (scene: THREE.Scene) => {
 }
 
 let listCounter = 0;
-const drawCubeFromList = (scene: THREE.Scene, list: {commit: GitHubCommit, lane: number}[]) => {
-	const geometry: THREE.BoxGeometry = new THREE.BoxGeometry()
-	const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
-	const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
-	cube.translateZ(-75);
-	cube.translateY(6);
+const drawCubeFromList = (scene: THREE.Scene, list: number[][]) => {
+	const geometry: THREE.BoxGeometry = new THREE.BoxGeometry();
+	const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 
 	const positions = [-6,-3,0,3,6];
-	// const randomPosition = Math.floor(Math.random() * 5);
-	const currentCommit = list[listCounter];
-	cube.translateX(positions[currentCommit.lane]);
-	cube.rotation.x += 0.2;
-	currentCubes.push({cube, lane: currentCommit.lane});
-	scene.add(cube);
+	const listOfCommitsToDraw = list[listCounter];
+	listOfCommitsToDraw.forEach(commitLane => {
+		const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
+		cube.translateZ(-75);
+		cube.translateY(6);
+		cube.translateX(positions[commitLane]);
+		cube.rotation.x += 0.2;
+		currentCubes.push({cube, lane: commitLane});
+		scene.add(cube);
+	});
+
 	listCounter++;
 }
 
