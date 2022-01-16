@@ -155,8 +155,7 @@ var animate = function () {
 				console.log({points});
 				document.getElementById("points").innerHTML = points.toString();
 			}
-			const speed = 0.5
-			cubeData.cube.translateZ(speed);
+			cubeData.cube.translateZ(0.3);
 		}
 	});
 
