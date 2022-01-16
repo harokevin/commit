@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
 layout: page
 title: commit
-permalink: /blob/main/dist/client/index.html
+permalink: dist/client/index.html
