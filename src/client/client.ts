@@ -1,5 +1,11 @@
-import * as THREE from '/build/three.module.js'
-import { OrbitControls } from '/jsm/controls/OrbitControls'
+//Three JS 0.128.0 introduces breaking changes that would make this app require a bundler
+	//https://github.com/mrdoob/three.js/wiki/Migration-Guide#r127--r128
+//@ts-ignore
+import * as THREE from '/build/three.module.js';
+//@ts-ignore
+import { OrbitControls } from '/jsm/controls/OrbitControls';
+
+
 import { Maigard_git_class_commits, GitHubCommit } from './Maigard_git-class_commits.js'
 import { generateList } from './graph.js'
 
