@@ -2,6 +2,10 @@
   "name": "commit",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "=8.11.3",
+    "npm": "=5.6.0"
+  },
   "scripts": {
     "start": "concurrently -k \"tsc -p ./src/server -w\" \"tsc -p ./src/client -w\" \"nodemon ./dist/server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
