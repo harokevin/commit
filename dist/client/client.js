@@ -130,6 +130,7 @@ var animate = function () {
                 console.log({ points });
                 document.getElementById("points").innerHTML = points.toString();
             }
+            const speed = 0.3;
             cubeData.cube.translateZ(0.3);
         }
     });
