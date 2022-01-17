@@ -7,11 +7,13 @@
     "npm": "=8.1.2"
   },
   "scripts": {
-    "start": "concurrently -k \"tsc -p ./src/server -w\" \"tsc -p ./src/client -w\" \"nodemon ./dist/server/server.js\"",
+    "start": "concurrently -k \"tsc -p ./src/server -w\" \"tsc -p ./src/client -w\" \"nodemon ./dist/server/server.js\" ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:server": "node ./dist/server/server.js",
-    "build": "tsc -p ./src/server && tsc -p ./src/client"
+    "build": "tsc -p ./src/server && tsc -p ./src/client",
+    "ghp": "cp -v ./dist/client/* ./docs/"
   },
+  "pre-commit": [ "precommit-msg", "ghp" ],
   "author": "Kevin Haro",
   "license": "ISC",
   "devDependencies": {
