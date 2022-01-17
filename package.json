@@ -12,14 +12,17 @@
     "start:server": "node ./dist/server/server.js",
     "build": "tsc -p ./src/server && tsc -p ./src/client",
     "ghp": "cp -v ./dist/client/* ./docs/",
-    "precommit-msg": "echo 'Pre-commit checks...' && cp -v ./dist/client/* ./docs/ && exit 0"
+    "hooks:pre-push": "echo 'Pre-commit checks...' && cp -v ./dist/client/* ./docs/"
   },
-  "pre-commit": [ "precommit-msg", "ghp" ],
+  "husky": {
+    "pre-push": "npm run hooks:pre-push"
+  },
   "author": "Kevin Haro",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^13.9.1",
     "concurrently": "^5.1.0",
+    "husky": "^7.0.4",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
