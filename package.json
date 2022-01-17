@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:server": "node ./dist/server/server.js",
     "build": "tsc -p ./src/server && tsc -p ./src/client",
-    "ghp": "cp -v ./dist/client/* ./docs/"
+    "ghp": "cp -v ./dist/client/* ./docs/",
+    "precommit-msg": "echo 'Pre-commit checks...' && cp -v ./dist/client/* ./docs/ && exit 0"
   },
   "pre-commit": [ "precommit-msg", "ghp" ],
   "author": "Kevin Haro",
